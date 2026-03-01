@@ -24,7 +24,9 @@ class DataLineage(BaseModel):
     source_file_hash: str = Field(description="SHA-256 hash of the raw file")
     source_row: int = Field(description="Row/record number in the original file")
     provider: str = Field(description="Provider identifier (e.g. 'wine-society')")
-    ingestion_timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    ingestion_timestamp: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc)
+    )
     pipeline_version: str = Field(
         default="unknown", description="Git SHA of the processing code"
     )

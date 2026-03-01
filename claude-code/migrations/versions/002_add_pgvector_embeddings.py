@@ -15,9 +15,7 @@ depends_on = None
 
 def upgrade() -> None:
     # Add embedding column (1536 dimensions = text-embedding-3-small)
-    op.execute(
-        "ALTER TABLE wines ADD COLUMN embedding vector(1536)"
-    )
+    op.execute("ALTER TABLE wines ADD COLUMN embedding vector(1536)")
 
     # HNSW index for approximate nearest neighbour search
     # m=16 and ef_construction=64 are good defaults for ~100K records

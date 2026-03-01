@@ -36,9 +36,7 @@ class GrapeVariety(BaseModel):
     """A grape variety and its percentage in the blend."""
 
     grape: str
-    percentage: Optional[Decimal] = Field(
-        default=None, ge=0, le=100, decimal_places=1
-    )
+    percentage: Optional[Decimal] = Field(default=None, ge=0, le=100, decimal_places=1)
 
 
 class FlavorProfile(BaseModel):

@@ -44,8 +44,7 @@ class TestBaseScraper:
         scraper = ConcreteScraper()
         assert scraper._resolve_url("/wines") == "https://example.com/wines"
         assert (
-            scraper._resolve_url("/wines?page=2")
-            == "https://example.com/wines?page=2"
+            scraper._resolve_url("/wines?page=2") == "https://example.com/wines?page=2"
         )
 
     def test_scrape_result_defaults(self) -> None:

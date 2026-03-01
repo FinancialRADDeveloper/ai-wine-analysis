@@ -23,9 +23,7 @@ class Settings(BaseSettings):
     environment: Literal["dev", "staging", "prod"] = "dev"
 
     # Database
-    database_url: str = (
-        "postgresql://sommelier:sommelier_dev@localhost:5432/sommelier"
-    )
+    database_url: str = "postgresql://sommelier:sommelier_dev@localhost:5432/sommelier"
 
     # AWS (LocalStack in dev)
     aws_endpoint_url: str | None = "http://localhost:4566"

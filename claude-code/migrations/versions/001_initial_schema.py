@@ -125,9 +125,7 @@ def upgrade() -> None:
         "wine_prices",
         ["wine_id", "provider_id", "valid_from"],
     )
-    op.create_index(
-        "ix_wine_prices_provider", "wine_prices", ["provider_id"]
-    )
+    op.create_index("ix_wine_prices_provider", "wine_prices", ["provider_id"])
 
     # =========================================================================
     # consumption_history -- personal trade/position history

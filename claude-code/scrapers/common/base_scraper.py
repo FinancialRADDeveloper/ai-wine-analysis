@@ -46,7 +46,9 @@ class ScrapeResult:
 
     provider: str
     url: str
-    scrape_timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    scrape_timestamp: datetime = field(
+        default_factory=lambda: datetime.now(timezone.utc)
+    )
     records_found: int = 0
     records_failed: int = 0
     raw_data: list[dict[str, Any]] = field(default_factory=list)
@@ -170,7 +172,7 @@ class BaseScraper(ABC):
                 return response
             except requests.RequestException as e:
                 last_exception = e
-                wait = self.config.backoff_factor ** attempt
+                wait = self.config.backoff_factor**attempt
                 logger.warning(
                     "Request failed, retrying",
                     extra={

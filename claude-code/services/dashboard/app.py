@@ -5,7 +5,11 @@ from dash.dependencies import Input, Output
 from dash.dash_table import DataTable
 import plotly.express as px
 import pandas as pd
-from scrapers.wine_society.csv_importer import load_wine_data, clean_wine_data, get_data_summary
+from scrapers.wine_society.csv_importer import (
+    load_wine_data,
+    clean_wine_data,
+    get_data_summary,
+)
 
 # Load and prepare the data
 print("Loading wine data for dashboard...")
