@@ -1,0 +1,72 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment / secrets
+.env
+.env.local
+.env.production
+
+# Docker
+docker-compose.override.yml
+
+# Data -- personal wine data and large datasets
+# (raw CSV exports contain personal purchase history)
+data/wine_society/raw/*.csv
+data/wine_society/order_details/*.pdf
+data/wine_society/receipts/*.pdf
+data/wine_society/wine_notes/*.pdf
+data/wine_society/tasting_notes/*.pdf
+data/x_wines/*.csv
+data/x_wines/*.json
+data/berry_bros/*.json
+data/majestic/*.csv
+
+# MLflow experiment tracking
+mlruns/
+mlartifacts/
+
+# LocalStack
+.localstack/
+volume/
+
+# Database
+*.db
+*.sqlite3
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Coverage
+htmlcov/
+.coverage
+coverage.xml
+
+# mypy
+.mypy_cache/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/

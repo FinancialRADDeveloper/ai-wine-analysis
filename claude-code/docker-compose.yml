@@ -1,0 +1,95 @@
+# Sommelier Platform - Local Development Stack
+#
+# Usage:
+#   make docker-up    (or: docker compose up -d)
+#   make docker-down  (or: docker compose down)
+#
+# Services:
+#   - PostgreSQL 16 with pgvector extension
+#   - LocalStack (mock S3, SQS, EventBridge, Step Functions)
+#   - MLflow tracking server
+#   - FastAPI (REST API)
+#   - Plotly Dash (analytics dashboard)
+
+services:
+
+  # ==========================================================================
+  # Infrastructure
+  # ==========================================================================
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: sommelier-db
+    environment:
+      POSTGRES_USER: sommelier
+      POSTGRES_PASSWORD: sommelier_dev
+      POSTGRES_DB: sommelier
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sommelier"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  localstack:
+    image: localstack/localstack:3
+    container_name: sommelier-localstack
+    environment:
+      SERVICES: s3,sqs,events,stepfunctions
+      DEFAULT_REGION: eu-west-2
+    ports:
+      - "4566:4566"
+    volumes:
+      - localstack_data:/var/lib/localstack
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.10.0
+    container_name: sommelier-mlflow
+    command: >
+      mlflow server
+      --host 0.0.0.0
+      --port 5000
+      --backend-store-uri sqlite:///mlflow/mlflow.db
+      --default-artifact-root /mlflow/artifacts
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_data:/mlflow
+
+  # ==========================================================================
+  # Application Services (uncomment when ready)
+  # ==========================================================================
+
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: services/api/Dockerfile
+  #   container_name: sommelier-api
+  #   environment:
+  #     DATABASE_URL: postgresql://sommelier:sommelier_dev@postgres:5432/sommelier
+  #     ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+
+  # dashboard:
+  #   build:
+  #     context: .
+  #     dockerfile: services/dashboard/Dockerfile
+  #   container_name: sommelier-dashboard
+  #   environment:
+  #     API_BASE_URL: http://api:8000
+  #   ports:
+  #     - "8050:8050"
+  #   depends_on:
+  #     - api
+
+volumes:
+  pgdata:
+  localstack_data:
+  mlflow_data:
